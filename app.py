@@ -2,6 +2,7 @@ import streamlit as st
 import preprocessor,helper
 import matplotlib.pyplot as plt
 import seaborn as sns
+import advertools as adv
 
 st.sidebar.title("Whatsapp Chat Analyzer")
 
@@ -122,10 +123,44 @@ if uploaded_file is not None:
 
         # with col1:
         #     st.dataframe(emoji_df)
+
         # with col2:
         #     fig,ax = plt.subplots()
         #     ax.pie(emoji_df[1].head(),labels=emoji_df[0].head(),autopct="%0.2f")
         #     st.pyplot(fig)
+
+        # #emoji analysis by Gaurav
+
+        
+
+        #emoji analysis
+        emoji_df = helper.analyze_emojis(selected_user,df)
+        
+        st.title("Emoji Analysis")
+
+        col1,col2= st.columns(2)
+
+        with col1:
+            st.dataframe(emoji_df)
+
+
+        # with col1:
+        #     st.dataframe(emoji_df)
+        # cnt = 0
+
+        # with col2:
+        #     cnt+= 1
+        #     print(cnt)
+        #     fig,ax = plt.subplots()
+        #     ax.pie(emoji_df[1].head())
+        #     st.pyplot(fig)
+
+
+
+        
+
+
+
 
 
 
