@@ -6,3 +6,4 @@ wordcloud
 pandas
 emoji
 regex
+advertools
