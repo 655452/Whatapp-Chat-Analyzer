@@ -3,7 +3,7 @@ import pandas as pd
 f=open('demo.txt','r',encoding='utf-8')
 
 data=f.read()
-print(type(data))
+# print(type(data))
 
 # pattern='\d{1,2}/\d{1,2}/\d{1,2},\s\d{1,2}:\d{2}\s-\s'
 # data="Asit 1:78 AM kskj 56:45 AM njkjds 78:74 PM "
@@ -18,7 +18,7 @@ df=pd.DataFrame({'user_message':message,'message_date':dates})
 # print(df.head())
 # df['message_date']=pd.to_datetime(df['message_date'],format='%m/%d/%Y, %H:%M - ')
 
-print(df.shape)
+# print(df.shape)
 df.head()
 
 users = []
@@ -35,6 +35,9 @@ for message in df['user_message']:
 df['user'] = users
 df['message'] = messages
 df.drop(columns=['user_message'], inplace=True)
+# deleting the group notification row from the table
+df=df.drop(df[df['user']=='group_notification'].index)
+df=df.drop(df[df['message']=='<Media omitted>\r\n'].index)
 # print(df.head())
 
 print(df['message_date'])
@@ -44,7 +47,7 @@ dateTime=[]
 for i in df['message_date']:
      temp=re.findall('\d{1,2}/\d{1,2}/\d{2}',i)
      temp2=re.findall('\s\d{1,2}:\d{1,2}\s',i)
-     print(temp[0],temp2[0])
+    #  print(temp[0],temp2[0])
      dates.append(temp[0])
      time.append(temp2[0])
      dateTime.append(temp[0]+temp2[0])
@@ -54,7 +57,7 @@ df['date_time']=dateTime
 df.drop(columns=['message_date'], inplace=True)
 
 df['date']=pd.to_datetime(df['date_time'])
-print(df.head())
+# print(df.head())
 
 df['only_date'] = df['date'].dt.date
 df['year'] = df['date'].dt.year
