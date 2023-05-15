@@ -3,6 +3,7 @@ from wordcloud import WordCloud
 import pandas as pd
 from collections import Counter
 import emoji
+# update1
 import regex as re
 
 extract = URLExtract()
@@ -80,7 +81,6 @@ def most_common_words(selected_user,df):
     most_common_df = pd.DataFrame(Counter(words).most_common(20))
     return most_common_df
 
-#emoji analysis --> asit
 # def emoji_helper(selected_user,df):
 #     if selected_user != 'Overall':
 #         df = df[df['user'] == selected_user]
@@ -94,12 +94,12 @@ def most_common_words(selected_user,df):
 #     return emoji_df
 
 
-#emoji analysis --> gaurav
-
+# update 1 gurav wani
 
 def analyze_emojis(selected_user,df):
     # find all emojis in the DataFrame column
-    
+    if selected_user != 'Overall':
+            df = df[df['user'] == selected_user]
     emojis = []
     for text in df['message']:
         emojis += re.findall(r'\X', str(text))
@@ -125,10 +125,7 @@ def analyze_emojis(selected_user,df):
     results_df = results_df.sort_values('Frequency', ascending=False).reset_index(drop=True)
     
     return results_df
-        
-
-
-
+    
 
 def monthly_timeline(selected_user,df):
 
@@ -176,8 +173,6 @@ def activity_heatmap(selected_user,df):
     user_heatmap = df.pivot_table(index='day_name', columns='period', values='message', aggfunc='count').fillna(0)
 
     return user_heatmap
-
-
 
 
 

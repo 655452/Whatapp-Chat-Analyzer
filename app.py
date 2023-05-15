@@ -2,7 +2,6 @@ import streamlit as st
 import preprocessor,helper
 import matplotlib.pyplot as plt
 import seaborn as sns
-import advertools as adv
 
 st.sidebar.title("Whatsapp Chat Analyzer")
 
@@ -86,16 +85,36 @@ if uploaded_file is not None:
         if selected_user == 'Overall':
             st.title('Most Busy Users')
             x,new_df = helper.most_busy_users(df)
-            fig, ax = plt.subplots()
+            fig, ax = plt.subplots(figsize=(10, 10))
 
-            col1, col2 = st.columns(2)
+            ax.bar(x.index, x.values,color='red')
+            ax.set_xlim([-1, len(x.index)])
+            ax.set_ylabel('Message_Count')
+            plt.xticks(rotation='vertical')
+            st.pyplot(fig)
+            st.dataframe(new_df)
 
-            with col1:
-                ax.bar(x.index, x.values,color='red')
-                plt.xticks(rotation='vertical')
-                st.pyplot(fig)
-            with col2:
-                st.dataframe(new_df)
+
+            # col1,col2= st.columns(2)
+
+            # with col1:
+            #     ax.bar(x.index, x.values,color='red')
+            #     ax.set_ylabel('Message_Count')
+            #     plt.xticks(rotation='vertical')
+            #     st.pyplot(fig)
+            
+            
+            # with col2:
+            #     st.dataframe(new_df)
+
+            
+            
+            st.title('Most Busy Users')
+            y,new_df = helper.most_busy_users(df)
+            fig, ax = plt.subplots(figsize=(10, 10))
+            ax.pie(y.values,labels=y.index,autopct='%1.1f%%')
+            # ax.axis('equals')
+            st.pyplot(fig)
 
         # WordCloud
         st.title("Wordcloud")
@@ -123,17 +142,13 @@ if uploaded_file is not None:
 
         # with col1:
         #     st.dataframe(emoji_df)
-
         # with col2:
         #     fig,ax = plt.subplots()
         #     ax.pie(emoji_df[1].head(),labels=emoji_df[0].head(),autopct="%0.2f")
         #     st.pyplot(fig)
 
-        # #emoji analysis by Gaurav
 
-        
-
-        #emoji analysis
+         #emoji analysis
         emoji_df = helper.analyze_emojis(selected_user,df)
         
         st.title("Emoji Analysis")
@@ -142,6 +157,10 @@ if uploaded_file is not None:
 
         with col1:
             st.dataframe(emoji_df)
+        # with col2:
+        #     fig,ax = plt.subplots()
+        #     ax.pie(emoji_df.values,labels=emoji_df,autopct="%0.2f")
+        #     st.pyplot(fig)
 
 
         # with col1:
@@ -154,13 +173,6 @@ if uploaded_file is not None:
         #     fig,ax = plt.subplots()
         #     ax.pie(emoji_df[1].head())
         #     st.pyplot(fig)
-
-
-
-        
-
-
-
 
 
 

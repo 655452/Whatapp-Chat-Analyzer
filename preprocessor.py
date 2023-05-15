@@ -129,6 +129,8 @@ def preprocess(data):
     df['user'] = users
     df['message'] = messages
     df.drop(columns=['user_message'], inplace=True)
+    df=df.drop(df[df['user']=='group_notification'].index)
+    df=df.drop(df[df['message']=='<Media omitted>'].index)
     # print(df.head())
 
     # print(df['message_date'])
@@ -138,7 +140,7 @@ def preprocess(data):
     for i in df['message_date']:
         temp=re.findall('\d{1,2}/\d{1,2}/\d{2}',i)
         temp2=re.findall('\s\d{1,2}:\d{1,2}\s',i)
-        print(temp[0],temp2[0])
+        # print(temp[0],temp2[0])
         dates.append(temp[0])
         time.append(temp2[0])
         dateTime.append(temp[0]+temp2[0])
